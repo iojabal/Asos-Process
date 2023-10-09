@@ -1,6 +1,6 @@
 from flask import Flask, request
 from models.Process import Process
-from models.Algorithms import Algorithms, Priority, SJF, FCFS
+from models.Algorithms import Algorithms, Priority, SJF, FCFS, SRT
 
 app = Flask(__name__)
 
@@ -59,6 +59,20 @@ def fcfsFunction():
         a = [str(p) for p in process]
         ququ.append(a)
     fcfs.showExecutionQueue()
+    return {"message": ququ}
+
+
+@app.route("/SRT", methods=['POST'])
+def srtFunction():
+    srt = SRT()
+    srt.processes = algorithm.processes
+    srt.doAlgorithm()
+
+    ququ = []
+    for process in srt.queue:
+        a = [str(p) for p in process]
+        ququ.append(a)
+    srt.showExecutionQueue()
     return {"message": ququ}
 
 if __name__ == '__main__':
