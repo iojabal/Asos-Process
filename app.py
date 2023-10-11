@@ -24,6 +24,15 @@ def loadProcesses():
 
 @app.route("/priority", methods=["POST"])
 def priorityFunction():
+
+    algorithm.processes = []
+    processes = request.get_json()
+    for process in processes:
+
+        p = Process()
+        p.createProcess(process)
+        algorithm.processes.append(p)
+
     priority = Priority()
     priority.processes = algorithm.processes
     priority.readyQueue = priority.sortQueue(priority.processes)
@@ -38,7 +47,8 @@ def priorityFunction():
     for process in priority.executionQueue:
         if not isinstance(process, int):
             if isinstance(process, str):
-                exequeue.append(process)  # Si ya es una cadena, simplemente añádela
+                # Si ya es una cadena, simplemente añádela
+                exequeue.append(process)
             else:
                 try:
                     a = str(process)  # Intenta convertir a cadena
@@ -49,8 +59,18 @@ def priorityFunction():
             exequeue.append(process)
     return {"ReadyQueue": ququ, "ExecutionQueue": exequeue, "waitingTime": priority.waitingTime, "turnaroundTime": priority.timeAroundtoShow}, 200
 
+
 @app.route("/SJF", methods=["POST"])
 def sjfFunction():
+
+    algorithm.processes = []
+    processes = request.get_json()
+    for process in processes:
+
+        p = Process()
+        p.createProcess(process)
+        algorithm.processes.append(p)
+
     sjf = SJF()
     sjf.processes = algorithm.processes
     sjf.readyQueue = sjf.sortQueue(sjf.processes)
@@ -66,7 +86,8 @@ def sjfFunction():
     for process in sjf.executionQueue:
         if not isinstance(process, int):
             if isinstance(process, str):
-                exequeue.append(process)  # Si ya es una cadena, simplemente añádela
+                # Si ya es una cadena, simplemente añádela
+                exequeue.append(process)
             else:
                 try:
                     a = str(process)  # Intenta convertir a cadena
@@ -80,6 +101,15 @@ def sjfFunction():
 
 @app.route("/FCFS", methods=['POST'])
 def fcfsFunction():
+
+    algorithm.processes = []
+    processes = request.get_json()
+    for process in processes:
+
+        p = Process()
+        p.createProcess(process)
+        algorithm.processes.append(p)
+
     fcfs = FCFS()
     fcfs.processes = algorithm.processes
     fcfs.doAlgorithm()
@@ -95,7 +125,8 @@ def fcfsFunction():
     for process in fcfs.executionQueue:
         if not isinstance(process, int):
             if isinstance(process, str):
-                exequeue.append(process)  # Si ya es una cadena, simplemente añádela
+                # Si ya es una cadena, simplemente añádela
+                exequeue.append(process)
             else:
                 try:
                     a = str(process)  # Intenta convertir a cadena
@@ -110,6 +141,15 @@ def fcfsFunction():
 
 @app.route("/SRT", methods=['POST'])
 def srtFunction():
+
+    algorithm.processes = []
+    processes = request.get_json()
+    for process in processes:
+
+        p = Process()
+        p.createProcess(process)
+        algorithm.processes.append(p)
+
     srt = SRT()
     srt.processes = algorithm.processes
     srt.doAlgorithm()
@@ -125,7 +165,8 @@ def srtFunction():
     for process in srt.executionQueue:
         if not isinstance(process, int):
             if isinstance(process, str):
-                exequeue.append(process)  # Si ya es una cadena, simplemente añádela
+                # Si ya es una cadena, simplemente añádela
+                exequeue.append(process)
             else:
                 try:
                     a = str(process)  # Intenta convertir a cadena
@@ -139,12 +180,27 @@ def srtFunction():
             "turnaroundTime": srt.timeAround}, 200
 
 
-
 @app.route("/rr", methods=["POST"])
 def rrFunction():
+
+    algorithm.processes = []
+    jsonRequest = request.get_json()
+    processes = jsonRequest["processes"]
+    print(type(jsonRequest["quantum"]))
+
+    for process in processes:
+
+        p = Process()
+        p.createProcess(process)
+        algorithm.processes.append(p)
+
+
+
     rr = RR()
     rr.processes = algorithm.processes
     rr.readyQueue = copy.deepcopy(algorithm.processes)
+    rr.ctx = jsonRequest['context']
+    rr.quantum = jsonRequest['quantum']
     rr.doAlgorithm()
 
     ququ = []
@@ -158,7 +214,8 @@ def rrFunction():
     for process in rr.executionQueue:
         if not isinstance(process, int):
             if isinstance(process, str):
-                exequeue.append(process)  # Si ya es una cadena, simplemente añádela
+                # Si ya es una cadena, simplemente añádela
+                exequeue.append(process)
             else:
                 try:
                     a = str(process)  # Intenta convertir a cadena

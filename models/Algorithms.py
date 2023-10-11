@@ -9,8 +9,8 @@ class Algorithms:
         self.executionQueue = [0]
         self.readyQueue = []
         self.queue = []
-        self.ctx = 1
-        self.quantum = 3
+        self.ctx = 0
+        self.quantum = 0
         self.pr = False
         self.timeAround = []
         self.timeAroundtoShow = []
@@ -43,7 +43,8 @@ class Algorithms:
 
     def getProcessWithMinArrivedTime(self):
         min_index = -1
-        min_arrived_time = float('inf')  # Inicializamos con un valor positivo infinito
+        # Inicializamos con un valor positivo infinito
+        min_arrived_time = float('inf')
 
         for index, process in enumerate(self.processes):
             if process.arrivedTime < min_arrived_time:
@@ -74,12 +75,13 @@ class Algorithms:
         for list in self.queue:
             for p in list:
                 if p.process == process.process:
-                    wp+=1
+                    wp += 1
         return wp - 1
+
+
 class Priority(Algorithms):
     def __init__(self):
         super().__init__()
-
 
     def sortQueue(self, q):
         return sorted(q, key=lambda x: x.priority)
@@ -106,8 +108,10 @@ class Priority(Algorithms):
 
             if ready_process.CPUTIME == 1:
 
-                self.timeAround.append(ant + self.calculateTuraroundTime(ready_process))
-                self.waitingTime.append(self.calculatWaitingTime(ready_process))
+                self.timeAround.append(
+                    ant + self.calculateTuraroundTime(ready_process))
+                self.waitingTime.append(
+                    self.calculatWaitingTime(ready_process))
                 try:
                     ant += self.calculateTuraroundTime(ready_process)
                 except:
@@ -158,8 +162,10 @@ class SJF(Algorithms):
                     self.executionQueue.append(0)
             if ready_process.CPUTIME == 1:
 
-                self.timeAround.append(ant + self.calculateTuraroundTime(ready_process))
-                self.waitingTime.append(self.calculatWaitingTime(ready_process))
+                self.timeAround.append(
+                    ant + self.calculateTuraroundTime(ready_process))
+                self.waitingTime.append(
+                    self.calculatWaitingTime(ready_process))
                 try:
                     ant += self.calculateTuraroundTime(ready_process)
                 except:
@@ -167,12 +173,13 @@ class SJF(Algorithms):
         for tt, wt in zip(self.timeAround, self.waitingTime):
             self.timeAroundtoShow.append(tt + wt)
 
+
 class FCFS(Algorithms):
     def __init__(self):
         super().__init__()
 
     def doAlgorithm(self):
-        hgp =  self.getHighestArrivedTime()
+        hgp = self.getHighestArrivedTime()
         ant = 0
         i = 0
         while i < hgp:
@@ -204,8 +211,10 @@ class FCFS(Algorithms):
 
                 if ready_process.CPUTIME == 1:
 
-                    self.timeAround.append(ant + self.calculateTuraroundTime(ready_process))
-                    self.waitingTime.append(self.calculatWaitingTime(ready_process))
+                    self.timeAround.append(
+                        ant + self.calculateTuraroundTime(ready_process))
+                    self.waitingTime.append(
+                        self.calculatWaitingTime(ready_process))
                     try:
                         ant += self.calculateTuraroundTime(ready_process)
                     except:
@@ -269,21 +278,21 @@ class SRT(Algorithms):
                     for _ in range(self.ctx):
                         self.executionQueue.append(0)
 
-
             i += 1
 
         for ready_process in self.processes:
-                self.timeAround.append(ant + self.calculateTuraroundTime(ready_process))
-                self.waitingTime.append(self.calculatWaitingTime(ready_process))
-                try:
-                    ant += self.calculateTuraroundTime(ready_process)
-                except:
-                    ant = 0
+            self.timeAround.append(
+                ant + self.calculateTuraroundTime(ready_process))
+            self.waitingTime.append(self.calculatWaitingTime(ready_process))
+            try:
+                ant += self.calculateTuraroundTime(ready_process)
+            except:
+                ant = 0
 
         for tt, wt in zip(self.timeAround, self.waitingTime):
             self.timeAroundtoShow.append(tt + wt)
-        self.queue = ["0" if sublist == [] or sublist[0] == None else sublist for sublist in self.queue]
-
+        self.queue = ["0" if sublist == [] or sublist[0]
+                      == None else sublist for sublist in self.queue]
 
 
 class RR(Algorithms):
@@ -318,11 +327,11 @@ class RR(Algorithms):
             if time_slice >= quantum:
                 time_slice = 0
 
-
         for current_process in self.processes:
             if isinstance(current_process, int):
                 continue
-            self.timeAround.append(ant + self.calculateTurnaroundTime(current_process))
+            self.timeAround.append(
+                ant + self.calculateTurnaroundTime(current_process))
             self.waitingTime.append(self.calculatWaitingTime(current_process))
             try:
                 ant += self.calculateTurnaroundTime(current_process)
