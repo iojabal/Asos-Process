@@ -1,18 +1,12 @@
 import Table from '../../components/InputTable/InputTable.jsx'
 import { useState } from 'react';
 
-// PRIORIDAD MENOS TIEMPO DE LLEGADA
-// FCFS MENOS PRIORIDAD
-// SJF SOLO TIEMPO DE CPU
-// SRT SIN PRIORIDAD
-// RR SOLO TIEMPO DE CPU
-
 export default function Home(){
-    var proceso = ''
+    const [proceso, setProceso] = useState('')
     const [cambioContexto, setCambioContexto] = useState(false);
-    // const [proceso, setProceso] = useState('');
+    
     const onChangeValue = (event) => {
-        proceso = event.target.value
+        setProceso(event.target.value)
         console.log(event.target.value);
     };
 
@@ -63,6 +57,12 @@ export default function Home(){
                     )}
                 </div>
             </div>
+
+            {proceso === 'priority' && <Table numeroFilas = {5} proceso={proceso} tll={false} prio ={true} tee={true}></Table>}
+            {proceso === 'FCFS' && <Table numeroFilas = {5} proceso={proceso} tll={true} prio ={false} tee={true}></Table>}
+            {proceso === 'SRT' && <Table numeroFilas = {5} proceso={proceso} tll={true} prio ={false} tee={true}></Table>}
+            {proceso === 'SJF' && <Table numeroFilas = {5} proceso={proceso} tll={true} prio ={false} tee={true}></Table>}
+            {proceso === 'rr' && <Table numeroFilas = {5} proceso={proceso} tll={false} prio ={false} tee={true}></Table>}
         </>
     );
 }

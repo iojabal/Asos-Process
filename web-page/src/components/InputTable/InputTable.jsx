@@ -32,9 +32,9 @@ export default function Tabla(props) {
                 <thead className='border border-black'>
                 <tr className='text-xs md:text-xl'>
                     <th className="border border-black p-2 bg-yellow-800 text-white">PROCESO</th>
-                    <th className="border border-black p-2 bg-yellow-700 text-white">TIEMPO DE EJECUCIÓN</th>
-                    <th className="border border-black p-2 bg-yellow-600 text-white">TIEMPO DE LLEGADA</th>
-                    <th className="border border-black p-2 bg-yellow-500 text-white">PRIORIDAD</th>
+                    {props.tee === true && <th className="border border-black p-2 bg-yellow-700 text-white">TIEMPO DE EJECUCIÓN</th>}
+                    {props.tll === true && <th className="border border-black p-2 bg-yellow-600 text-white">TIEMPO DE LLEGADA</th>}
+                    {props.prio === true && <th className="border border-black p-2 bg-yellow-500 text-white">PRIORIDAD</th>}
                 </tr>
                 </thead>
                 <tbody>
@@ -49,6 +49,7 @@ export default function Tabla(props) {
                         required
                         />
                     </td>
+                    {props.tee === true && 
                     <td className="border border-black">
                         <input
                         type="number"
@@ -58,6 +59,8 @@ export default function Tabla(props) {
                         required
                         />
                     </td>
+                    }
+                    {props.tll === true &&
                     <td className="border border-black">
                         <input
                         type="number"
@@ -67,6 +70,8 @@ export default function Tabla(props) {
                         required
                         />
                     </td>
+                    }
+                    {props.prio === true &&
                     <td className="border border-black">
                         <input
                         type="number"
@@ -76,6 +81,7 @@ export default function Tabla(props) {
                         required
                         />
                     </td>
+                    }
                     </tr>
                 ))}
                 </tbody>
