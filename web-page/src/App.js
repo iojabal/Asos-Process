@@ -1,11 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
-
+import UpperBar from './components/UpperBar/UpperBar.jsx'
 function App() {
   return (
-    <h1 className="text-3xl font-bold underline text-green-500">
-      Hello world!
-    </h1>
+      <UpperBar></UpperBar>
   );
 }
 
