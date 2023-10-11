@@ -34,6 +34,7 @@ export default function Home(){
                     <input
                         type='number'
                         className=' border border-black text-center'
+                        min={1}
                     />
                 </div>
 
@@ -45,6 +46,7 @@ export default function Home(){
                             checked = {cambioContexto}
                             onChange={handleCambioContextoChange}
                             className='border border-black' 
+                            min={1}
                             name='CContexto'></input>
                     </div>
                     {cambioContexto && (

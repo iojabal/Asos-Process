@@ -56,6 +56,7 @@ export default function Tabla(props) {
                         className=' w-full text-center'
                         value={rowData.tiempoEjecucion}
                         onChange={(e) => handleInputChange(e, rowIndex, 'cputime')}
+                        min={1}
                         required
                         />
                     </td>
@@ -67,6 +68,7 @@ export default function Tabla(props) {
                         className=' w-full text-center'
                         value={rowData.tiempoLlegada}
                         onChange={(e) => handleInputChange(e, rowIndex, 'arrivedTime')}
+                        min={1}
                         required
                         />
                     </td>
@@ -78,6 +80,7 @@ export default function Tabla(props) {
                         className=' w-full text-center'
                         value={rowData.prioridad}
                         onChange={(e) => handleInputChange(e, rowIndex, 'priority')}
+                        min={1}
                         required
                         />
                     </td>
