@@ -1,8 +1,8 @@
 import './App.css';
-import UpperBar from './components/UpperBar/UpperBar.jsx'
+import Home from './View/Home/Home.jsx'
 function App() {
   return (
-      <UpperBar></UpperBar>
+      <Home></Home>
   );
 }
 
