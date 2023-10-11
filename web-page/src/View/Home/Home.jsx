@@ -63,8 +63,6 @@ export default function Home(){
                     )}
                 </div>
             </div>
-        
-            <Table numeroFilas = {5} proceso={proceso}></Table>
         </>
     );
 }
