@@ -6,6 +6,8 @@ class Process:
         self.CPUTIME = None
         self.priority = None
         self.arrivedTime = None
+        self.waitingTime = 0
+        self.turnaroundTime = 0
 
     def createProcess(self, jsonProcess):
         self.process = jsonProcess['process']
@@ -25,4 +27,4 @@ class Process:
             self.arrivedTime = None
 
     def __str__(self) -> str:
-        return f'{f"process: {self.process}, cputime: {self.CPUTIME}, priority: {self.priority}, arrivedTime: {self.arrivedTime}"}'
+        return f'{f"process: {self.process}"}'
