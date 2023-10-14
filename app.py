@@ -3,16 +3,18 @@ import copy
 from flask import Flask, request
 from models.Process import Process
 from models.Algorithms import Algorithms, Priority, SJF, FCFS, SRT, RR
+from flask_cors import CORS
 
 app = Flask(__name__)
 
 algorithm = Algorithms()
-
+CORS(app)
 
 @app.route("/", methods=["POST"])
 def loadProcesses():
     algorithm.processes = []
     processes = request.get_json()
+    print(processes)
     for process in processes:
 
         p = Process()
@@ -24,7 +26,7 @@ def loadProcesses():
 
 @app.route("/priority", methods=["POST"])
 def priorityFunction():
-
+    print(request.get_json())
     algorithm.processes = []
     processes = request.get_json()
     for process in processes:
@@ -40,9 +42,13 @@ def priorityFunction():
     priority.showExecutionQueue()
     exequeue = []
     ququ = []
+    prcs = []
     for process in priority.queue:
         a = [str(p) for p in process]
         ququ.append(a)
+
+    for p in priority.processes:
+        prcs.append(str(p))
 
     for process in priority.executionQueue:
         if not isinstance(process, int):
@@ -57,7 +63,7 @@ def priorityFunction():
                     print(f"No se pudo convertir {process} en una cadena.")
         else:
             exequeue.append(process)
-    return {"ReadyQueue": ququ, "ExecutionQueue": exequeue, "waitingTime": priority.waitingTime, "turnaroundTime": priority.timeAroundtoShow}, 200
+    return {"ReadyQueue": ququ, "ExecutionQueue": exequeue, "waitingTime": priority.waitingTime, "turnaroundTime": priority.timeAroundtoShow, "process": prcs}, 200
 
 
 @app.route("/SJF", methods=["POST"])
@@ -74,14 +80,19 @@ def sjfFunction():
     sjf = SJF()
     sjf.processes = algorithm.processes
     sjf.readyQueue = sjf.sortQueue(sjf.processes)
+
+    test = sjf.sortQueue(sjf.processes)
     sjf.doAlgorithm()
     sjf.showExecutionQueue()
     sjf.showReadyQueue()
     ququ = []
     exequeue = []
+    prcs = []
     for process in sjf.queue:
         a = [str(p) for p in process]
         ququ.append(a)
+
+
 
     for process in sjf.executionQueue:
         if not isinstance(process, int):
@@ -96,12 +107,17 @@ def sjfFunction():
                     print(f"No se pudo convertir {process} en una cadena.")
         else:
             exequeue.append(process)
-    return {"ReadyQueue": ququ, "ExecutionQueue": exequeue, "waitingTime": sjf.waitingTime, "turnaroundTime": sjf.timeAround}, 200
+
+
+    for p in test:
+        prcs.append(str(p))
+
+    return {"ReadyQueue": ququ, "ExecutionQueue": exequeue, "waitingTime": sjf.waitingTime, "turnaroundTime": sjf.timeAround, "process": prcs}, 200
 
 
 @app.route("/FCFS", methods=['POST'])
 def fcfsFunction():
-
+    print(request.get_json())
     algorithm.processes = []
     processes = request.get_json()
     for process in processes:
@@ -116,6 +132,7 @@ def fcfsFunction():
 
     ququ = []
     exequeue = []
+    prcs = []
 
     for process in fcfs.queue:
         a = [str(p) for p in process]
@@ -135,8 +152,11 @@ def fcfsFunction():
                     print(f"No se pudo convertir {process} en una cadena.")
         else:
             exequeue.append(process)
+    for process in fcfs.processesc:
+        a = [str(process)]
+        prcs.append(a)
     return {"ReadyQueue": ququ, "ExecutionQueue": exequeue, "waitingTime": fcfs.waitingTime,
-            "turnaroundTime": fcfs.timeAround}, 200
+            "turnaroundTime": fcfs.timeAround, "processes": prcs}, 200
 
 
 @app.route("/SRT", methods=['POST'])

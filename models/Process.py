@@ -27,4 +27,4 @@ class Process:
             self.arrivedTime = None
 
     def __str__(self) -> str:
-        return f'{f"process: {self.process}"}'
+        return f'{f"{self.process}"}'

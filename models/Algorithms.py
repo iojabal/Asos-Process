@@ -15,6 +15,7 @@ class Algorithms:
         self.timeAround = []
         self.timeAroundtoShow = []
         self.waitingTime = []
+        self.processesc = []
 
     def showReadyQueue(self):
         for process in self.readyQueue:
@@ -109,11 +110,11 @@ class Priority(Algorithms):
             if ready_process.CPUTIME == 1:
 
                 self.timeAround.append(
-                    ant + self.calculateTuraroundTime(ready_process))
+                    ant + self.calculateTurnaroundTime(ready_process))
                 self.waitingTime.append(
                     self.calculatWaitingTime(ready_process))
                 try:
-                    ant += self.calculateTuraroundTime(ready_process)
+                    ant += self.calculateTurnaroundTime(ready_process)
                 except:
                     ant = 0
         for tt, wt in zip(self.timeAround, self.waitingTime):
@@ -163,11 +164,11 @@ class SJF(Algorithms):
             if ready_process.CPUTIME == 1:
 
                 self.timeAround.append(
-                    ant + self.calculateTuraroundTime(ready_process))
+                    ant + self.calculateTurnaroundTime(ready_process))
                 self.waitingTime.append(
                     self.calculatWaitingTime(ready_process))
                 try:
-                    ant += self.calculateTuraroundTime(ready_process)
+                    ant += self.calculateTurnaroundTime(ready_process)
                 except:
                     ant = 0
         for tt, wt in zip(self.timeAround, self.waitingTime):
@@ -182,10 +183,12 @@ class FCFS(Algorithms):
         hgp = self.getHighestArrivedTime()
         ant = 0
         i = 0
+        # self.processesc = copy.deepcopy(self.processes)
         while i < hgp:
             pr = self.getProcessWithMinArrivedTime()
             if pr is not None:
                 self.readyQueue.append(pr)
+                self.processesc.append(pr)
             self.queue.append(copy.deepcopy(self.readyQueue))
             ready_process = self.readyQueue.pop(0)
 
@@ -210,13 +213,14 @@ class FCFS(Algorithms):
                         self.executionQueue.append(0)
 
                 if ready_process.CPUTIME == 1:
-
+                    if ready_process not in self.processesc:
+                        self.processesc.append(ready_process)
                     self.timeAround.append(
-                        ant + self.calculateTuraroundTime(ready_process))
+                        ant + self.calculateTurnaroundTime(ready_process))
                     self.waitingTime.append(
                         self.calculatWaitingTime(ready_process))
                     try:
-                        ant += self.calculateTuraroundTime(ready_process)
+                        ant += self.calculateTurnaroundTime(ready_process)
                     except:
                         ant = 0
 
@@ -282,10 +286,10 @@ class SRT(Algorithms):
 
         for ready_process in self.processes:
             self.timeAround.append(
-                ant + self.calculateTuraroundTime(ready_process))
+                ant + self.calculateTurnaroundTime(ready_process))
             self.waitingTime.append(self.calculatWaitingTime(ready_process))
             try:
-                ant += self.calculateTuraroundTime(ready_process)
+                ant += self.calculateTurnaroundTime(ready_process)
             except:
                 ant = 0
 
