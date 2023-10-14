@@ -49,9 +49,9 @@ export default function Tabla(props) {
             <thead className='border border-black'>
               <tr className='text-xs md:text-xl'>
                 <th className="border border-black p-2 bg-yellow-800 text-white">PROCESO</th>
-                <th className="border border-black p-2 bg-yellow-700 text-white">TIEMPO DE EJECUCIÓN</th>
-                <th className="border border-black p-2 bg-yellow-600 text-white">TIEMPO DE LLEGADA</th>
-                <th className="border border-black p-2 bg-yellow-500 text-white">PRIORIDAD</th>
+                {props.tee === true && <th className="border border-black p-2 bg-yellow-700 text-white">TIEMPO DE EJECUCIÓN</th>}
+                {props.tll === true && <th className="border border-black p-2 bg-yellow-600 text-white">TIEMPO DE LLEGADA</th>}
+                {props.prio === true && <th className="border border-black p-2 bg-yellow-500 text-white">PRIORIDAD</th>}
               </tr>
             </thead>
             <tbody>
@@ -66,33 +66,42 @@ export default function Tabla(props) {
                       required
                     />
                   </td>
-                  <td className="border border-black">
-                    <input
-                      type="number"
-                      className=' w-full text-center'
-                      value={rowData.tiempoEjecucion}
-                      onChange={(e) => handleInputChange(e, rowIndex, 'cputime')}
-                      required
-                    />
-                  </td>
-                  <td className="border border-black">
-                    <input
-                      type="number"
-                      className=' w-full text-center'
-                      value={rowData.tiempoLlegada}
-                      onChange={(e) => handleInputChange(e, rowIndex, 'arrivedTime')}
-                      required
-                    />
-                  </td>
-                  <td className="border border-black">
-                    <input
-                      type="number"
-                      className=' w-full text-center'
-                      value={rowData.prioridad}
-                      onChange={(e) => handleInputChange(e, rowIndex, 'priority')}
-                      required
-                    />
-                  </td>
+                  {props.tee === true &&
+                    <td className="border border-black">
+                      <input
+                        type="number"
+                        className=' w-full text-center'
+                        value={rowData.tiempoEjecucion}
+                        onChange={(e) => handleInputChange(e, rowIndex, 'cputime')}
+                        min={1}
+                        required
+                      />
+                    </td>
+                  }
+                  {props.tll === true &&
+                    <td className="border border-black">
+                      <input
+                        type="number"
+                        className=' w-full text-center'
+                        value={rowData.tiempoLlegada}
+                        onChange={(e) => handleInputChange(e, rowIndex, 'arrivedTime')}
+                        min={1}
+                        required
+                      />
+                    </td>
+                  }
+                  {props.prio === true &&
+                    <td className="border border-black">
+                      <input
+                        type="number"
+                        className=' w-full text-center'
+                        value={rowData.prioridad}
+                        onChange={(e) => handleInputChange(e, rowIndex, 'priority')}
+                        min={1}
+                        required
+                      />
+                    </td>
+                  }
                 </tr>
               ))}
             </tbody>

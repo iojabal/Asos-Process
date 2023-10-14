@@ -19,13 +19,14 @@ export default function Home() {
         setProceso(event.target.value)
     };
 
+    const handleCambioContextoChange = (event) => {
+        console.log(event.target.checked)
+        setCambioContexto(event.target.checked);
+    };
+
     return (
         <>
-            <header>
-                <UpperBar></UpperBar>
-            </header>
-
-            <div className='flex flex-col'>
+            <div className='flex flex-col sm:flex-row justify-center'>
                 <div className='flex flex-col p-5'>
                     <h2>SELECCIONE MÉTODO A RESOLVER:</h2>
                     <div className='flex flex-col justify-between max-w-lg p-4' onChange={onChangeValue}>
@@ -37,12 +38,34 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className=' flex flex-row p-5'>
-                    <label> INGRESE EL NUMERO DE PROCESOS:</label>
+                <div className=' flex md:flex-col justify-center px-5 space-x-3 items-center'>
+                    <label className='md:p-4'> INGRESE EL NUMERO DE PROCESOS:</label>
                     <input
                         type='number'
                         className=' border border-black text-center'
+                        min={1}
                     />
+                </div>
+
+                <div className='flex flex-col justify-center'>
+                    <div className=' flex flex-row p-5 space-x-3 items-center'>
+                        <label>¿CAMBIO DE CONTEXTO? </label>
+                        <input
+                            type='checkbox'
+                            checked={cambioContexto}
+                            onChange={handleCambioContextoChange}
+                            className='border border-black'
+                            min={1}
+                            name='CContexto'></input>
+                    </div>
+                    {cambioContexto && (
+                        <div className='px-4'>
+                            <input
+                                className='border border-black text-center'
+                                type='number'
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
 
